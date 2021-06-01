@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-var primaryColor = Colors.pink;
-// const primaryColor = Color(0xffFA3F63);
-const primaryDarkColor = Color(0xffA72D36);
+const primaryColor = Color(0xff0B655A);
+const primaryDarkColor = Color(0xff08554C);
 const primaryColorLite = Color(0xff6B4AFC);
 const primaryColorLiteTrans = Color(0x3f6B4AFC);
 
-const accentColor = Colors.blue;
+const accentColor = Color(0xffFF8962);
 // const accentColor = Color(0xffE702F5);
 
 const white = Colors.white;

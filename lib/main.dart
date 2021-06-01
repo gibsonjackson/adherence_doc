@@ -1,6 +1,8 @@
 import 'package:adherence_doc/src/utils/res/res.dart';
 import 'package:flutter/material.dart';
 
+import 'src/features/home/presentation/pages/homepage.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -11,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: Strings.APP_NAME,
       theme: THEME_DATA,
-      // home: HomePage(),
+      home: HomePage(),
     );
   }
 }
