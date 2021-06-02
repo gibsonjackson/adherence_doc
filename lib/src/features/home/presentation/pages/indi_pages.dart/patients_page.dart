@@ -1,5 +1,7 @@
+import 'package:adherence_doc/src/common/ui/my_button.dart';
 import 'package:adherence_doc/src/common/ui/my_table_row.dart';
 import 'package:adherence_doc/src/features/home/data/models/patient_model.dart';
+import 'package:adherence_doc/src/features/home/presentation/pages/indi_pages.dart/add_treatment.dart';
 import 'package:adherence_doc/src/utils/res/res.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,15 @@ class PatientPage extends StatelessWidget {
   const PatientPage({Key key, this.patientModel}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    addTreatment() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AddTreatmentPage(),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Patient"),
@@ -38,6 +49,10 @@ class PatientPage extends StatelessWidget {
           MyTableRow("Email", patientModel.email),
           MyTableRow("Phone", patientModel.phone),
           MyTableRow("Doctor", patientModel.doctor),
+          MyButton(
+            foo: addTreatment,
+            title: "Add Treatment",
+          ),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:adherence_doc/src/utils/res/colors.dart';
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
@@ -11,24 +12,28 @@ class MyButton extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(accentColor),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100.0),
+                  ),
                 ),
               ),
+              onPressed: foo,
+              child: Text(title),
             ),
-            onPressed: foo,
-            child: Text(title),
           ),
-        ),
-        SizedBox(height: 20),
-      ],
+          SizedBox(height: 20),
+        ],
+      ),
     );
   }
 }

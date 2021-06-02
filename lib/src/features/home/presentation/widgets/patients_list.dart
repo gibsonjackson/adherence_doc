@@ -11,7 +11,10 @@ class PatientsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('patients').snapshots(),
+      stream: Firestore.instance
+          .collection('patients')
+          .where("doctor", isEqualTo: "jaayushmax@gmail.com")
+          .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Text("No users yet!");
