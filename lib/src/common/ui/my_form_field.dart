@@ -10,8 +10,8 @@ class MyFormField extends StatelessWidget {
 
   const MyFormField(
       {Key key,
-      this.title,
-      this.controller,
+      @required this.title,
+      @required this.controller,
       this.isNullable = false,
       this.isEmail = false,
       this.isPhone = false})
@@ -48,7 +48,7 @@ class MyFormField extends StatelessWidget {
         validator: (value) {
           if (!isNullable) {
             if (value == null || value.isEmpty) {
-              return 'This field cannot be left empty';
+              return Strings.FIELD_REQUIRED;
             }
           }
 

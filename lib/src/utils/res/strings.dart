@@ -50,4 +50,6 @@ class Strings {
   //     "Hi Aayush, what would you like to call me";
   static const USERNAME_HINT = "Enter your nickname...";
   static const ASSITANTNAME_HINT = "Enter medical assitant's name...";
+
+  static const FIELD_REQUIRED = 'This field cannot be left empty';
 }
