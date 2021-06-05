@@ -36,7 +36,7 @@ class TreatmentModel {
   String get frequency => _frequency;
   set frequency(String frequency) => _frequency = frequency;
 
-  TreatmentModel.fromJson(Map<String, dynamic> json) {
+  TreatmentModel.fromJson(Map<dynamic, dynamic> json) {
     _treatmentType = json['treatmentType'];
     _treatmentName = json['treatmentName'];
     _doseAmount = json['doseAmount'];

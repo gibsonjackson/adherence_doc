@@ -34,7 +34,6 @@ class MyButton extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 20),
         ],
       ),
     );

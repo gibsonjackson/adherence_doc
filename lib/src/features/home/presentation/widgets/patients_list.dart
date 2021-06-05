@@ -13,6 +13,7 @@ class PatientsList extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance
           .collection('patients')
+          //FIXME get doctor email from login
           .where("doctor", isEqualTo: "jaayushmax@gmail.com")
           .snapshots(),
       builder: (context, snapshot) {
