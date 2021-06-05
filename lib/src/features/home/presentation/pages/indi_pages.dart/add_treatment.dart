@@ -1,10 +1,17 @@
 import 'package:adherence_doc/src/common/ui/my_button.dart';
 import 'package:adherence_doc/src/common/ui/my_drodown_field.dart';
 import 'package:adherence_doc/src/common/ui/my_form_field.dart';
+import 'package:adherence_doc/src/features/home/data/datasources/firebase_home_provider.dart';
+import 'package:adherence_doc/src/features/home/data/models/patient_model.dart';
+import 'package:adherence_doc/src/features/home/data/models/trewatment_model.dart';
 import 'package:adherence_doc/src/utils/res/res.dart';
 import 'package:flutter/material.dart';
 
 class AddTreatmentPage extends StatefulWidget {
+  final PatientModel patientModel;
+
+  const AddTreatmentPage({Key key, @required this.patientModel})
+      : super(key: key);
   @override
   _AddTreatmentPageState createState() => _AddTreatmentPageState();
 }
@@ -12,6 +19,7 @@ class AddTreatmentPage extends StatefulWidget {
 class _AddTreatmentPageState extends State<AddTreatmentPage> {
   final _addTreatmentFormKey = GlobalKey<FormState>();
   String _frequencySeletced, _treatmentTypeSelected;
+  bool isLoading = false;
 
   var _frequencyList = [
     "Daily",
@@ -31,15 +39,40 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
   ];
 
   TextEditingController _nameController = TextEditingController(),
-      _doseController = TextEditingController(),
-      _phoneController = TextEditingController(),
-      _clinicController = TextEditingController(),
-      _awsmCont5roller = TextEditingController(text: "awsm");
+      _doseController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    addTreatment() {
-      if (_addTreatmentFormKey.currentState.validate()) {}
+    addTreatment() async {
+      if (_addTreatmentFormKey.currentState.validate()) {
+        FirebaseHomeProvider firebaseHomeProvider = FirebaseHomeProvider();
+        TreatmentModel treatmentModel = TreatmentModel(
+          treatmentType: _treatmentTypeSelected,
+          treatmentName: _nameController.text,
+          doseAmount: _doseController.text,
+          frequency: _frequencySeletced,
+        );
+        setState(() {
+          isLoading = true;
+        });
+
+        await firebaseHomeProvider
+            .addTreatmentToPatient(
+          widget.patientModel.email,
+          treatmentModel,
+        )
+            .then((value) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Treatment Added Successfully!',
+              ),
+              backgroundColor: successColor,
+            ),
+          );
+          Navigator.of(context).pop();
+        });
+      }
     }
 
     return Scaffold(

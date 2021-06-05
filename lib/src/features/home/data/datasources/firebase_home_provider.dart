@@ -1,3 +1,4 @@
+import 'package:adherence_doc/src/features/home/data/models/trewatment_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseHomeProvider {
@@ -49,9 +50,10 @@ class FirebaseHomeProvider {
   //   }
   // }
 
-  void addDoctorToPatient(String patientEmail, String doctorEmail) {
+  Future<void> addDoctorToPatient(
+      String patientEmail, String doctorEmail) async {
     print("aaa");
-    databaseReference
+    await databaseReference
         .collection('patients')
         .where('email', isEqualTo: patientEmail)
         .getDocuments()
@@ -62,6 +64,26 @@ class FirebaseHomeProvider {
             .collection('patients')
             .document(f.documentID)
             .updateData({"doctor": doctorEmail});
+      });
+    });
+  }
+
+  Future<void> addTreatmentToPatient(
+      String patientEmail, TreatmentModel treatmentModel) async {
+    print("aaa");
+    await databaseReference
+        .collection('patients')
+        .where('email', isEqualTo: patientEmail)
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        print(f.data);
+        databaseReference
+            .collection('patients')
+            .document(f.documentID)
+            .updateData({
+          "treatments": FieldValue.arrayUnion([treatmentModel.toJson()])
+        });
       });
     });
   }

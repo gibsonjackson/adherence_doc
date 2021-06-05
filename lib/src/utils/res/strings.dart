@@ -6,6 +6,8 @@ class Strings {
 
   static const RUPEE_SYM = "\u20B9";
 
+  static const PATIENT_EMAIL = "jaayushmax@gmail.com";
+
   //*login screen
   static const WELCOME = "WELCOME";
   static const FORGOT_PASSWORD = "Forgot Password?";
