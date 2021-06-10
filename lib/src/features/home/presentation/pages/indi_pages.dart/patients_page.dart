@@ -96,7 +96,10 @@ class PatientPage extends StatelessWidget {
         shrinkWrap: true,
         children: patientModel.treatments
             .map(
-              (e) => TreatmentCard(treatmentModel: e),
+              (e) => TreatmentCard(
+                treatmentModel: e,
+                patientEmail: patientModel.email,
+              ),
             )
             .toList(),
       );

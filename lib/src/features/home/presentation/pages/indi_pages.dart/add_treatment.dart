@@ -39,7 +39,8 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
   ];
 
   TextEditingController _nameController = TextEditingController(),
-      _doseController = TextEditingController();
+      _doseController = TextEditingController(),
+      _repeatTillController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,7 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
           treatmentName: _nameController.text,
           doseAmount: _doseController.text,
           frequency: _frequencySeletced,
+          repeatTill: _repeatTillController.text,
         );
         setState(() {
           isLoading = true;
@@ -108,6 +110,11 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
                   controller: _doseController,
                 ),
                 _dropdownSelector("Frequency", _frequencyList),
+                MyFormField(
+                  title: "Repeat Till  (dd/mm/yyyy)",
+                  isDate: true,
+                  controller: _repeatTillController,
+                ),
                 MyButton(
                   foo: addTreatment,
                   title: "Add Treatment",

@@ -69,7 +69,9 @@ class FirebaseHomeProvider {
   }
 
   Future<void> addTreatmentToPatient(
-      String patientEmail, TreatmentModel treatmentModel) async {
+    String patientEmail,
+    TreatmentModel treatmentModel,
+  ) async {
     print("aaa");
     await databaseReference
         .collection('patients')
@@ -83,6 +85,28 @@ class FirebaseHomeProvider {
             .document(f.documentID)
             .updateData({
           "treatments": FieldValue.arrayUnion([treatmentModel.toJson()])
+        });
+      });
+    });
+  }
+
+  Future<void> deleteTreatmentFromPatient(
+    String patientEmail,
+    TreatmentModel treatmentModel,
+  ) async {
+    print("aaa");
+    await databaseReference
+        .collection('patients')
+        .where('email', isEqualTo: patientEmail)
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        print(f.data);
+        databaseReference
+            .collection('patients')
+            .document(f.documentID)
+            .updateData({
+          "treatments": FieldValue.arrayRemove([treatmentModel.toJson()])
         });
       });
     });
