@@ -134,7 +134,7 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
         actions: [
           TextButton(
             child: Text(
-              "ADD",
+              widget.isEdit ? "UPDATE" : "ADD",
               style: TextStyle(color: white),
             ),
             onPressed: widget.isEdit ? editTreatment : addTreatment,
