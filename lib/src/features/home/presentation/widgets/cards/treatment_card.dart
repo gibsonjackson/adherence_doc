@@ -2,6 +2,7 @@ import 'package:adherence_doc/src/features/home/data/datasources/firebase_home_p
 import 'package:adherence_doc/src/features/home/data/models/trewatment_model.dart';
 import 'package:adherence_doc/src/utils/res/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:adherence_doc/src/features/home/presentation/pages/indi_pages.dart/add_treatment.dart';
 
 class TreatmentCard extends StatelessWidget {
   final TreatmentModel treatmentModel;
@@ -64,6 +65,19 @@ class TreatmentCard extends StatelessWidget {
           });
     }
 
+    editTreatment() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AddTreatmentPage(
+            email: patientEmail,
+            treatmentModel: treatmentModel,
+            isEdit: true,
+          ),
+        ),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
       child: Card(
@@ -95,7 +109,7 @@ class TreatmentCard extends StatelessWidget {
                     Icons.edit_outlined,
                     color: primaryColor,
                   ),
-                  onPressed: () {},
+                  onPressed: editTreatment,
                 ),
                 IconButton(
                   icon: Icon(

@@ -18,7 +18,7 @@ class PatientPage extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => AddTreatmentPage(patientModel: patientModel),
+          builder: (context) => AddTreatmentPage(email: patientModel.email),
         ),
       );
     }

@@ -8,10 +8,16 @@ import 'package:adherence_doc/src/utils/res/res.dart';
 import 'package:flutter/material.dart';
 
 class AddTreatmentPage extends StatefulWidget {
-  final PatientModel patientModel;
+  final String email;
+  final TreatmentModel treatmentModel;
+  final bool isEdit;
 
-  const AddTreatmentPage({Key key, @required this.patientModel})
-      : super(key: key);
+  const AddTreatmentPage({
+    Key key,
+    @required this.email,
+    this.treatmentModel,
+    this.isEdit = false,
+  }) : super(key: key);
   @override
   _AddTreatmentPageState createState() => _AddTreatmentPageState();
 }
@@ -38,9 +44,20 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
     "Procedure",
   ];
 
-  TextEditingController _nameController = TextEditingController(),
-      _doseController = TextEditingController(),
-      _repeatTillController = TextEditingController();
+  TextEditingController _nameController, _doseController, _repeatTillController;
+
+  @override
+  void initState() {
+    super.initState();
+    _frequencySeletced = widget.treatmentModel?.frequency;
+    _treatmentTypeSelected = widget.treatmentModel?.treatmentType;
+    _nameController =
+        TextEditingController(text: widget.treatmentModel?.treatmentName);
+    _doseController =
+        TextEditingController(text: widget.treatmentModel?.doseAmount);
+    _repeatTillController =
+        TextEditingController(text: widget.treatmentModel?.repeatTill);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +77,7 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
 
         await firebaseHomeProvider
             .addTreatmentToPatient(
-          widget.patientModel.email,
+          widget.email,
           treatmentModel,
         )
             .then((value) {
@@ -77,16 +94,50 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
       }
     }
 
+    editTreatment() async {
+      if (_addTreatmentFormKey.currentState.validate()) {
+        FirebaseHomeProvider firebaseHomeProvider = FirebaseHomeProvider();
+        TreatmentModel updatedTreatmentModel = TreatmentModel(
+          treatmentType: _treatmentTypeSelected,
+          treatmentName: _nameController.text,
+          doseAmount: _doseController.text,
+          frequency: _frequencySeletced,
+          repeatTill: _repeatTillController.text,
+        );
+        setState(() {
+          isLoading = true;
+        });
+
+        await firebaseHomeProvider
+            .editTreatment(
+          patientEmail: widget.email,
+          oldTreatmentModel: widget.treatmentModel,
+          updatedTreatmentModel: updatedTreatmentModel,
+        )
+            .then((value) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Treatment Updated Successfully!',
+              ),
+              backgroundColor: successColor,
+            ),
+          );
+          Navigator.of(context).pop();
+        });
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Treatment"),
+        title: Text(widget.isEdit ? "Update Treatment" : "Add Treatment"),
         actions: [
           TextButton(
             child: Text(
               "ADD",
               style: TextStyle(color: white),
             ),
-            onPressed: addTreatment,
+            onPressed: widget.isEdit ? editTreatment : addTreatment,
           ),
         ],
       ),
@@ -116,8 +167,8 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
                   controller: _repeatTillController,
                 ),
                 MyButton(
-                  foo: addTreatment,
-                  title: "Add Treatment",
+                  foo: widget.isEdit ? editTreatment : addTreatment,
+                  title: widget.isEdit ? "Update Treatment" : "Add Treatment",
                 ),
               ],
             ),

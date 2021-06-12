@@ -1,5 +1,6 @@
 import 'package:adherence_doc/src/features/home/data/models/trewatment_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 class FirebaseHomeProvider {
   final Firestore databaseReference = Firestore.instance;
@@ -108,6 +109,20 @@ class FirebaseHomeProvider {
             .updateData({
           "treatments": FieldValue.arrayRemove([treatmentModel.toJson()])
         });
+      });
+    });
+  }
+
+  Future<void> editTreatment({
+    @required String patientEmail,
+    @required TreatmentModel oldTreatmentModel,
+    @required TreatmentModel updatedTreatmentModel,
+  }) async {
+    await deleteTreatmentFromPatient(patientEmail, oldTreatmentModel)
+        .then((value) async {
+      await addTreatmentToPatient(patientEmail, updatedTreatmentModel)
+          .then((value) {
+        return;
       });
     });
   }
