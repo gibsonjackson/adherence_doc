@@ -3,24 +3,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class FirebaseHomeProvider {
-  final Firestore databaseReference = Firestore.instance;
+  final FirebaseFirestore databaseReference = FirebaseFirestore.instance;
 
   Future<void> addUser(Map<dynamic, dynamic> userMap) async {
     DocumentReference ref =
         await databaseReference.collection("users").add(userMap);
-    print(ref.documentID);
+    print(ref.id);
   }
 
   Future<void> addDoctor(Map<dynamic, dynamic> doctorMap) async {
     DocumentReference ref =
         await databaseReference.collection("doctors").add(doctorMap);
-    print(ref.documentID);
+    print(ref.id);
   }
 
   Future<void> addPatient(Map<dynamic, dynamic> patientMap) async {
     DocumentReference ref =
         await databaseReference.collection("patients").add(patientMap);
-    print(ref.documentID);
+    print(ref.id);
   }
 
   // void getData() {
@@ -57,14 +57,14 @@ class FirebaseHomeProvider {
     await databaseReference
         .collection('patients')
         .where('email', isEqualTo: patientEmail)
-        .getDocuments()
+        .get()
         .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) {
+      snapshot.docs.forEach((f) {
         print(f.data);
         databaseReference
             .collection('patients')
-            .document(f.documentID)
-            .updateData({"doctor": doctorEmail});
+            .doc(f.id)
+            .update({"doctor": doctorEmail});
       });
     });
   }
@@ -77,14 +77,11 @@ class FirebaseHomeProvider {
     await databaseReference
         .collection('patients')
         .where('email', isEqualTo: patientEmail)
-        .getDocuments()
+        .get()
         .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) {
+      snapshot.docs.forEach((f) {
         print(f.data);
-        databaseReference
-            .collection('patients')
-            .document(f.documentID)
-            .updateData({
+        databaseReference.collection('patients').doc(f.id).update({
           "treatments": FieldValue.arrayUnion([treatmentModel.toJson()])
         });
       });
@@ -99,14 +96,11 @@ class FirebaseHomeProvider {
     await databaseReference
         .collection('patients')
         .where('email', isEqualTo: patientEmail)
-        .getDocuments()
+        .get()
         .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) {
+      snapshot.docs.forEach((f) {
         print(f.data);
-        databaseReference
-            .collection('patients')
-            .document(f.documentID)
-            .updateData({
+        databaseReference.collection('patients').doc(f.id).update({
           "treatments": FieldValue.arrayRemove([treatmentModel.toJson()])
         });
       });

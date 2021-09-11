@@ -65,17 +65,17 @@ class PatientPage extends StatelessWidget {
 
   Widget _treatmentsList() {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance
+      stream: FirebaseFirestore.instance
           .collection('patients')
           .where("email", isEqualTo: patientModel.email)
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Text("No Treatments yet!");
-        else if (snapshot.data.documents.length == 0)
+        else if (snapshot.data.docs.length == 0)
           return Text("No Treatments yet!");
 
-        return _buildList(context, snapshot.data.documents);
+        return _buildList(context, snapshot.data.docs);
       },
     );
   }

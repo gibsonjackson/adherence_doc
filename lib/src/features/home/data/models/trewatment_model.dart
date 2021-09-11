@@ -62,5 +62,5 @@ class TreatmentModel {
   }
 
   TreatmentModel.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromJson(snapshot.data);
+      : this.fromJson(snapshot.data());
 }

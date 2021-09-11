@@ -76,5 +76,5 @@ class PatientModel {
   }
 
   PatientModel.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromJson(snapshot.data);
+      : this.fromJson(snapshot.data());
 }
