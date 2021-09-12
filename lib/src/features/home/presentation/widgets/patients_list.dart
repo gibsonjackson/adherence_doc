@@ -14,11 +14,11 @@ class PatientsList extends StatelessWidget {
       stream: FirebaseFirestore.instance
           .collection('patients')
           //FIXME get doctor email from login
-          .where("doctor", isEqualTo: "jaayushmax@gmail.com")
+          .where("doctor", isEqualTo: "blah@hyderabad.bits-pilani.ac.in")
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
-          return Text("No users yet!");
+          return Center(child: Text("No Patients yet!"));
         else if (snapshot.data.docs.length == 0)
           return Center(child: Text("No Patients yet!"));
 
