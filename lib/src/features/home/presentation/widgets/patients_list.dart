@@ -6,21 +6,28 @@ import 'cards/patient_card.dart';
 
 class PatientsList extends StatelessWidget {
   final bool isSelectable;
+  final String doctorEmail;
 
-  const PatientsList({Key key, this.isSelectable = false}) : super(key: key);
+  const PatientsList(
+      {Key key, this.isSelectable = false, @required this.doctorEmail})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('patients')
           //FIXME get doctor email from login
-          .where("doctor", isEqualTo: "blah@hyderabad.bits-pilani.ac.in")
+          .where("doctor", isEqualTo: doctorEmail)
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
-          return Center(child: Text("No Patients yet!"));
+          return Center(
+              child: Text(
+                  "No Patients yet! Ask your admin to add patients for you."));
         else if (snapshot.data.docs.length == 0)
-          return Center(child: Text("No Patients yet!"));
+          return Center(
+              child: Text(
+                  "No Patients yet! Ask your admin to add patients for you."));
 
         return _buildList(context, snapshot.data.docs);
       },

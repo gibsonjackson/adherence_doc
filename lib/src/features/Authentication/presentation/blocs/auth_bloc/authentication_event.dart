@@ -13,12 +13,12 @@ class AppStarted extends AuthenticationEvent {
 }
 
 class LoggedIn extends AuthenticationEvent {
-  final String token;
+  final User user;
 
-  LoggedIn({@required this.token});
+  LoggedIn({@required this.user});
 
   @override
-  String toString() => 'LoggedIn { token: $token }';
+  String toString() => 'LoggedIn { user: $user }';
 }
 
 class LoggedOut extends AuthenticationEvent {

@@ -4,6 +4,7 @@ import 'package:adherence_doc/src/features/Authentication/data/models/user.dart'
 import 'package:adherence_doc/src/features/Authentication/data/repositories/login_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -23,14 +24,13 @@ class AuthenticationBloc
   ) async* {
     AuthPersistManager manager = AuthPersistManager();
     if (event is AppStarted) {
-      final bool hasToken = false;
+      final String userMail = await manager.getUserMail();
       // User user = User(id: 1, name: "name", points: 2);
       // yield AuthenticationAuthenticated(user);
 
-      if (hasToken) {
+      if (userMail != null && userMail != "") {
         //FIXME
-        User user = User(id: 1, name: "name", points: 2);
-        yield AuthenticationAuthenticated(user);
+        yield AuthenticationAuthenticated(userMail);
       } else {
         yield AuthenticationUnauthenticated();
       }
@@ -38,20 +38,20 @@ class AuthenticationBloc
 
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await manager.persistUser();
-      yield AuthenticationUnnamed();
+      await manager.persistUserName(event.user.email);
+      yield AuthenticationAuthenticated(event.user.email);
     }
 
-    if (event is NamingComplete) {
-      yield AuthenticationLoading();
-      await manager.persistUserName(event.user);
-      await manager.persistAssName(event.ass);
-      // USER = event.user;
-      // ASSITANT_NAME = event.ass;
-      // User user = DummyData().user;
-      // user.name = USER;3
-      // yield AuthenticationAuthenticated(user);
-    }
+    // if (event is NamingComplete) {
+    //   yield AuthenticationLoading();
+    //   await manager.persistUserName(event.user);
+    //   await manager.persistAssName(event.ass);
+    //   // USER = event.user;
+    //   // ASSITANT_NAME = event.ass;
+    //   // User user = DummyData().user;
+    //   // user.name = USER;3
+    //   // yield AuthenticationAuthenticated(user);
+    // }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();

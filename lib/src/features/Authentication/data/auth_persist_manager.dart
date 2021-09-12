@@ -34,6 +34,11 @@ class AuthPersistManager {
     await manager.putString(usernameKey, username);
   }
 
+  Future getUserMail() async {
+    String mail = await manager.getString(usernameKey);
+    return mail;
+  }
+
   Future getPersonalisations() async {
     String username = await manager.getString(usernameKey);
     String assname = await manager.getString(assistantnameKey);

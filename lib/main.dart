@@ -58,7 +58,7 @@ class Crossroads extends StatelessWidget {
           return SplashPage();
         }
         if (state is AuthenticationAuthenticated) {
-          return HomePage();
+          return HomePage(doctorEmail: state.userMail);
         }
         if (state is AuthenticationUnauthenticated) {
           return LoginPage(userRepository: userRepository);
@@ -67,7 +67,7 @@ class Crossroads extends StatelessWidget {
         if (state is AuthenticationLoading) {
           return LoadingIndicator();
         }
-        return HomePage();
+        return SplashPage();
       },
     );
   }

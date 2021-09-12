@@ -4,6 +4,7 @@ import 'package:adherence_doc/src/features/Authentication/data/repositories/logi
 import 'package:adherence_doc/src/features/Authentication/presentation/blocs/auth_bloc/authentication_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
 part 'login_event.dart';
@@ -32,13 +33,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             event.password.isEmpty) {
           yield LoginFailure(error: "All Fields are neccessary!");
         } else {
-          final token = await userRepository.authenticate(
-            username: event.username,
+          final User user = await userRepository.authenticate(
+            email: event.username,
             password: event.password,
           );
 
-          authenticationBloc.add(LoggedIn(token: token));
-          yield LoginInitial();
+          authenticationBloc.add(LoggedIn(user: user));
+          // yield LoginInitial();
         }
       } catch (error) {
         yield LoginFailure(error: error.toString());
