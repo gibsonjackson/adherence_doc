@@ -2,13 +2,23 @@ import 'package:adherence_doc/src/common/widgets/loading.dart';
 import 'package:adherence_doc/src/features/Authentication/presentation/blocs/auth_bloc/authentication_bloc.dart';
 import 'package:adherence_doc/src/features/Authentication/presentation/pages/login_page.dart';
 import 'package:adherence_doc/src/utils/res/res.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'src/common/widgets/splashscreen.dart';
 import 'src/features/Authentication/data/repositories/login_repo.dart';
 import 'src/features/home/presentation/pages/homepage.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+  //initilization of Firebase app
+
+  // other Firebase service initialization
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
