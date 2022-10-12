@@ -9,6 +9,7 @@ class PatientModel {
   String _phone;
   String _doctor;
   ROLES _role;
+  String _parent;
   List<TreatmentModel> _treatments;
 
   PatientModel({
@@ -16,6 +17,7 @@ class PatientModel {
     String email,
     String phone,
     ROLES role,
+    String parent,
     String doctor,
     List<TreatmentModel> treatments,
   }) {
@@ -23,6 +25,7 @@ class PatientModel {
     this._email = email;
     this._phone = phone;
     this._role = role;
+    this._parent = parent;
     this._doctor = doctor;
     this._treatments = treatments;
   }
@@ -37,6 +40,8 @@ class PatientModel {
   set role(ROLES role) => _role = role;
   String get doctor => _doctor;
   set doctor(String doctor) => _doctor = doctor;
+  set parent(String parent) => _parent = parent;
+  String get parent => _parent;
   List<TreatmentModel> get treatments => _treatments;
   set wallets(List<TreatmentModel> treatments) => _treatments = treatments;
 
@@ -44,6 +49,7 @@ class PatientModel {
     _name = json['name'];
     _email = json['email'];
     _phone = json['phone'];
+    _parent = json['parent'];
     _doctor = json['doctor'] != null ? json['doctor'] : "Not Assigned";
     if (json['treatments'] != null) {
       _treatments = [];
@@ -59,6 +65,7 @@ class PatientModel {
     data['email'] = this._email;
     data['phone'] = this._phone;
     data['designation'] = "";
+    data['parent'] = this._parent;
     data['role'] = Utils().getRole(this._role);
     if (this._treatments != null) {
       data['treatments'] = this._treatments.map((v) => v.toJson()).toList();
@@ -71,6 +78,7 @@ class PatientModel {
     data['name'] = this._name;
     data['email'] = this._email;
     data['phone'] = this._phone;
+    data['parent'] = this._parent;
     data['role'] = Utils().getRole(this._role);
     return data;
   }

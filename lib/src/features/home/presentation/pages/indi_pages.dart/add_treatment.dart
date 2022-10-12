@@ -44,7 +44,7 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
     "Procedure",
   ];
 
-  TextEditingController _nameController, _doseController, _repeatTillController;
+  TextEditingController _nameController, _doseController, _repeatTillController,_descriptionController;
 
   @override
   void initState() {
@@ -57,6 +57,8 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
         TextEditingController(text: widget.treatmentModel?.doseAmount);
     _repeatTillController =
         TextEditingController(text: widget.treatmentModel?.repeatTill);
+    _descriptionController = TextEditingController(text: widget.treatmentModel?.description);
+
   }
 
   @override
@@ -70,6 +72,7 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
           doseAmount: _doseController.text,
           frequency: _frequencySeletced,
           repeatTill: _repeatTillController.text,
+          desc: _descriptionController.text
         );
         setState(() {
           isLoading = true;
@@ -103,6 +106,7 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
           doseAmount: _doseController.text,
           frequency: _frequencySeletced,
           repeatTill: _repeatTillController.text,
+          desc: _descriptionController.text
         );
         setState(() {
           isLoading = true;
@@ -165,6 +169,10 @@ class _AddTreatmentPageState extends State<AddTreatmentPage> {
                   title: "Repeat Till  (dd/mm/yyyy)",
                   isDate: true,
                   controller: _repeatTillController,
+                ),
+                MyFormField(
+                  title: "Description",
+                  controller: _descriptionController,
                 ),
                 MyButton(
                   foo: widget.isEdit ? editTreatment : addTreatment,

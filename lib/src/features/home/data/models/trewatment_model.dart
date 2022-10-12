@@ -16,6 +16,7 @@ class TreatmentModel {
   String _doseAmount;
   String _frequency;
   String _repeatTill;
+  String _description;
 
   TreatmentModel({
     @required String treatmentType,
@@ -23,12 +24,14 @@ class TreatmentModel {
     @required String doseAmount,
     @required String frequency,
     String repeatTill,
+    String desc
   }) {
     this._treatmentType = treatmentType;
     this._treatmentName = treatmentName;
     this._doseAmount = doseAmount;
     this._frequency = frequency;
     this._repeatTill = repeatTill;
+    this._description = desc;
   }
 
   String get treatmentType => _treatmentType;
@@ -41,6 +44,8 @@ class TreatmentModel {
   set frequency(String frequency) => _frequency = frequency;
   String get repeatTill => _repeatTill;
   set repeatTill(String repeatTill) => _repeatTill = repeatTill;
+  String get description => _description;
+  set description(String desc) => _description = desc;
 
   TreatmentModel.fromJson(Map<dynamic, dynamic> json) {
     _treatmentType = json['treatmentType'];
@@ -48,6 +53,7 @@ class TreatmentModel {
     _doseAmount = json['doseAmount'];
     _frequency = json['frequency'];
     _repeatTill = json['repeatTill'];
+    _description = json['description'];
   }
 
   Map<String, dynamic> toJson() {
@@ -57,7 +63,7 @@ class TreatmentModel {
     data['doseAmount'] = this._doseAmount;
     data['frequency'] = this._frequency;
     data["repeatTill"] = this._repeatTill;
-
+    data["description"] = this._description;
     return data;
   }
 

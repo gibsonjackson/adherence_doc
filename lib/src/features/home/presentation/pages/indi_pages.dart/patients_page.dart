@@ -53,6 +53,7 @@ class PatientPage extends StatelessWidget {
           MyTableRow("Email", patientModel.email),
           MyTableRow("Phone", patientModel.phone),
           MyTableRow("Doctor", patientModel.doctor),
+          MyTableRow("Parent", patientModel.parent),
           MyButton(
             foo: addTreatment,
             title: "Add Treatment",
